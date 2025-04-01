@@ -148,7 +148,7 @@ public class MapReduceDocumentsChain : BaseCombineDocumentsChain
                 .Select((r, i) => new Document(r.Value[questionResultKey] as string ?? string.Empty, docs[i].Metadata))
                 .ToList();
 
-        var (result, extraReturnDict) = await ReduceDocumentsChain.CombineDocsAsync(resultDocs, otherKeys, cancellationToken).ConfigureAwait(false);
+        var (result, extraReturnDict) = ReduceDocumentsChain.CombineDocsAsync(resultDocs, otherKeys, cancellationToken).Result;
 
         if (ReturnIntermediateSteps)
         {

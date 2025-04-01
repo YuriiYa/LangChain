@@ -2,6 +2,7 @@ using UglyToad.PdfPig;
 
 namespace LangChain.DocumentLoaders;
 
+
 /// <summary>
 /// 
 /// </summary>
@@ -13,6 +14,7 @@ public sealed class PdfPigPdfLoader : IDocumentLoader
         DocumentLoaderSettings? settings = null,
         CancellationToken cancellationToken = default)
     {
+
         dataSource = dataSource ?? throw new ArgumentNullException(paramName: nameof(dataSource));
 
         using var stream = await dataSource.GetStreamAsync(cancellationToken).ConfigureAwait(false);

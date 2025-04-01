@@ -186,8 +186,26 @@ public class LlmChain(LlmChainInput fields) : BaseChain(fields), ILlmChain
                     StopSequences = stop ?? [],
                 }, cancellationToken: cancellationToken))
             .ToList();
+        List<ChatResponse> responses = new List<ChatResponse>(responseTasks.Count);
 
-        var responses = await Task.WhenAll(responseTasks).ConfigureAwait(false);
+        try
+        {
+
+            foreach (var rt in responseTasks)
+            {
+                responses.Add(rt.Result);
+            }
+
+            //responses = await Task.WhenAll(responseTasks).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            Console.WriteLine("done");
+        }
 
         var generations = responses.Select(response =>
                 new Generation[]
